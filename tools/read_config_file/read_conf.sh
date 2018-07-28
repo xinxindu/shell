@@ -1,17 +1,17 @@
 #!/in/bash
 
-# __readINI [配置文件路径+名称] [节点名] [键值] 
+# __readINI [配置文件路径+名称] [节点名]
 function __readINI() {
-   INIFILE=$1; SECTION=$2; ITEM=$3
-   _readIni=`awk -F '=' '/['$SECTION']/{a=1}a==1&&$1~/'$ITEM'/{print $2;exit}' $INIFILE`
+   INIFILE=$1; SECTION=$2;
+   _readIni=`awk '/\['$SECTION'\]/,/$^/' $INIFILE |sed '1d' |sed '$d'`
    echo ${_readIni}
 }
 
 #example
 
-__readINI ./user.ini login name
+__readINI ./student.conf xiaoming
 #output zhangsan
 
-__readINI ./user.ini login paasword
+__readINI ./student.conf liwen
 #outpu 123456
 
